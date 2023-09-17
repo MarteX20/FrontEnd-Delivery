@@ -1,52 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient ) { }
+    constructor(private http: HttpClient) { }
 
-  login(email: string, password: string): Observable<any> {
-    const credentials = { email, password };
-    return this.http.post<any>('http://localhost:3001/auth/login', credentials)
-      .pipe(map(response => {
-        console.log('Server Response:', response);
-        if (response.accessToken) {
-          console.log('Token:', response.accessToken);
-          localStorage.setItem('token', response.accessToken);
-        }
-        return response;
-      }));
-  }
+    private isAuthenticated = new BehaviorSubject<boolean>(false);
 
-
-  register(username:String, nome:String,  cognome: string,
-    email: string,
-    password: string,
-    ruolo: string): Observable<any> {
-      const newUser = { email, password, nome, cognome,ruolo, username};
-    return this.http.post<any>('http://localhost:3001/auth/register', newUser);
-  }
-  logout() {
-    localStorage.removeItem('token');
-
-    return this.http.post<any>('http://localhost:3001/auth/logout' ,null)
+    login(email: string, password: string): Observable<any> {
+        const credentials = { email, password };
+        return this.http.post<any>('http://localhost:3001/auth/login', credentials)
+            .pipe(map(response => {
+                console.log('Server Response:', response);
+                if (response.accessToken) {
+                    console.log('Token:', response.accessToken);
+                    localStorage.setItem('token', response.accessToken);
+                }
+                return response;
+            }));
+    }
 
 
-  }
+    register(name: String, surname: string, email: string, password: string, tel: string, address: string): Observable<any> {
+        const newUser = { name, surname, email, password, tel, address };
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
+        return this.http.post<any>('http://localhost:3001/auth/register', newUser);
+    }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
+    logout() {
+        localStorage.removeItem('token')
+        this.isAuthenticated.next(false)
+        return this.http.post<any>('http://localhost:3001/auth/logout', null)
+    }
 
-  // Potresti aggiungere altre funzioni per gestire il token
+    getIsAuthenticated() {
+        return this.isAuthenticated.asObservable()
+    }
+
+    isLoggedIn(): boolean {
+        return !!localStorage.getItem('token');
+    }
+
+    getToken(): string | null {
+        return localStorage.getItem('token');
+    }
+
 }
 
 

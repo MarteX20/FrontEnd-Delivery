@@ -13,6 +13,11 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
 import { RouterModule, Route } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { TokenInterceptor } from './auth/token.interceptor';
+import { AppServiceService } from './services/app-service.service';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Route[] = [
@@ -20,6 +25,8 @@ const routes: Route[] = [
     { path: 'products', component: ProductsComponent },
     { path: 'product/:id', component: ProductDetailsComponent },
     { path: 'basket', component: BasketComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
@@ -39,9 +46,24 @@ const routes: Route[] = [
     ],
     imports: [
         RouterModule.forRoot(routes),
-        BrowserModule
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => localStorage.getItem('token'),
+                allowedDomains: ['localhost:3001'],
+                disallowedRoutes: [],
+            },
+        })
     ],
-    providers: [],
+    providers: [AppServiceService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true,
+        }],
     bootstrap: [AppComponent]
+
 })
 export class AppModule { }
