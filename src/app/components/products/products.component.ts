@@ -1,5 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from './product.service';
+import { Product } from './products';
+import { Observable, Subscription, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-products',
@@ -8,20 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-    constructor(private http: HttpClient) { }
+    products:  any
 
-    //     getProducts(page: number, order: string): Observable<QUI_INTERFACE_PRODOTTI[]> {
-    //         const params = new HttpParams()
-    //             .set('page', page.toString())
-    //             .set('order', order);
-    //         const headers = new HttpHeaders({
-    //             Autorization: Bearer ${ localStorage.getItem('token') }
-    //     });
-    //     return this.http.get<any>(this.urlRecipes, { params, headers })
-    //     .pipe(map(response => response.content));
-    // }
+    productsSubscription!: Subscription
+
+    constructor(private productSrv: ProductService, private http: HttpClient) { }
+
+    // private urlProducts: string = 'http://localhost:3001/products';
 
     ngOnInit(): void {
+        this.productSrv.getProducts().subscribe((data) => {
+            console.log(data);
+
+            this.products = data.content;
+        })
+    }
+
+    ngOnDestroy(){
+        if (this.productsSubscription) this.productsSubscription.unsubscribe()
     }
 
 }
