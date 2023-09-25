@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
     constructor(private authService: AuthService, private router: Router) { }
 
+    mess: string = ""
+
     ngOnInit(): void { }
 
     login(): void {
@@ -26,7 +28,9 @@ export class LoginComponent implements OnInit {
                 console.log('Login effettuato:', response);
             },
             (error) => {
-
+                if (error){
+                    this.mess = "Credenziali non valide!"
+                }
                 console.error('Errore di login:', error);
             }
         );

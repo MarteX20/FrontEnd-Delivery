@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
 import { Product } from './products';
-import { Observable, Subscription, map } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,23 +11,43 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductsComponent implements OnInit {
 
-    products:  any
-
+    products: any
     productsSubscription!: Subscription
 
-    constructor(private productSrv: ProductService, private http: HttpClient) { }
+    constructor(private productSrv: ProductService) { }
 
-    // private urlProducts: string = 'http://localhost:3001/products';
+    selectedProduct: any;
+    showModal: boolean = false;
+
+    openModal(product: any){
+        this.selectedProduct = product;
+        this.showModal = true;
+        const modal = document.getElementById("defaultModal")
+
+        if(modal) {
+            modal.style.display = "block";
+        }
+    }
+
+    closeModal(){
+        this.showModal = false;
+        this.selectedProduct = null;
+
+        const modal = document.getElementById("defaultModal")
+
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
 
     ngOnInit(): void {
         this.productSrv.getProducts().subscribe((data) => {
-            console.log(data);
-
+            // console.log(data);
             this.products = data.content;
         })
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         if (this.productsSubscription) this.productsSubscription.unsubscribe()
     }
 
