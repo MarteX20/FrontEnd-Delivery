@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './product.service';
-import { Product } from './products';
+import { IProduct } from '../../models/products';
 import { Subscription} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -40,15 +40,19 @@ export class ProductsComponent implements OnInit {
         }
     }
 
+    addToBasket(product: IProduct) {
+        this.productSrv.postProductToBasket(product).subscribe((data) => console.log(product));
+    }
+
     ngOnInit(): void {
         this.productSrv.getProducts().subscribe((data) => {
-            // console.log(data);
             this.products = data.content;
+            console.log(data);
+
         })
     }
 
     ngOnDestroy() {
         if (this.productsSubscription) this.productsSubscription.unsubscribe()
     }
-
 }
