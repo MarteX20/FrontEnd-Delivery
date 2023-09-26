@@ -32,6 +32,4 @@ export class ProductService {
     updateProductToBasket(product: IProduct) {
         return this.http.put<IProduct>(`${this.urlBasket}/${product.id}`, product);
     }
-
-
 }
