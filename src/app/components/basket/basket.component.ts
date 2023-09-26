@@ -11,24 +11,24 @@ import { Subscription } from 'rxjs';
 export class BasketComponent implements OnInit {
     constructor(private ProductService: ProductService) { }
 
-    basket:  any
+    basket: any
     basketSubscription!: Subscription
 
     ngOnInit(): void {
-        this.ProductService.getProductsFromBasket().subscribe( (data) => {
+        this.ProductService.getProductsFromBasket().subscribe((data) => {
             this.basket = data
             console.log(data);
         })
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         if (this.basketSubscription) this.basketSubscription.unsubscribe()
     }
 
     minusItemBasket(item: IProduct) {
         if (item.quantity === 1) {
             this.ProductService.deleteProductFromBasket(item.id).subscribe(() => {
-                let idx = this.basket.findIndex((data) => data.id === item.id);
+                let idx = this.basket.findIndex((data: IProduct) => data.id === item.id)
                 this.basket.splice(idx, 1);
             });
         } else {

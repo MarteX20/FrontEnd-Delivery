@@ -25,7 +25,7 @@ export class ProductService {
         return this.http.post<IProduct>(this.urlBasket, product)
     }
 
-    deleteProductFromBasket(id: number) {
+    deleteProductFromBasket(id: string) {
         return this.http.delete<any>(`${this.urlBasket}/${id}`);
     }
 
@@ -33,5 +33,5 @@ export class ProductService {
         return this.http.put<IProduct>(`${this.urlBasket}/${product.id}`, product);
     }
 
-    
+
 }
