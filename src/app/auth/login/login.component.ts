@@ -21,17 +21,13 @@ export class LoginComponent implements OnInit {
         this.authService.login(this.email, this.password).subscribe(
             (response) => {
 
-                const token = this.authService.getToken();
-                console.log('Token:', token);
-
-                this.router.navigate(['/home']);
-                console.log('Login effettuato:', response);
+                const token = this.authService.getToken()
+                this.router.navigate(['/products'])
             },
             (error) => {
                 if (error){
                     this.mess = "Credenziali non valide!"
                 }
-                console.error('Errore di login:', error);
             }
         );
     }

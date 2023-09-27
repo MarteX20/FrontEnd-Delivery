@@ -5,7 +5,7 @@
             <ul class="grid w-full gap-6 md:grid-cols-2">
                 <li>
                     <input type="radio" id="hosting-small" name="hosting" value="0" class="hidden peer"
-                        [(ngModel)]="deliveryCostInCents" required>
+                        [(ngModel)]="deliveryCostInCents" required (change)="isDeliverySelected = true">
                     <label for="hosting-small"
                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
@@ -21,7 +21,7 @@
                 </li>
                 <li>
                     <input type="radio" id="hosting-big" name="hosting" value="250" class="hidden peer"
-                        [(ngModel)]="deliveryCostInCents" required>
+                        [(ngModel)]="deliveryCostInCents" required (change)="isDeliverySelected = true">
                     <label for="hosting-big"
                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
@@ -37,85 +37,74 @@
                 </li>
             </ul>
         </div>
+    </div>
 
-        <div class="mr-2">
+    <div class="flex items-center justify-center flex-wrap mx-2">
+        <div class="mr-2 mb-2">
             <p
-                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-not-allowed dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:text-gray-200 dark:bg-gray-800">
+                class="w-full p-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-not-allowed dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:text-gray-200 dark:bg-gray-800">
                 Totale del tuo ordine è: {{ calculateTotal() | currency:"EUR"}}</p>
         </div>
 
-        <div class="ml-10">
-            <button (click)="clearBasket()"
+        <div class="ml-2 mb-2">
+            <button (click)="clearBasket()" [disabled]="!isDeliverySelected && !isPickupSelected"
                 class="block text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
                 Ordina!
             </button>
         </div>
     </div>
+</div>
 
-    <div class="container flex mb-5">
 
-        <div class="w-full mb-2 mr-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-            *ngFor="let item of basket">
+<div class="container flex mb-5">
+
+    <div class="w-full mb-2 mx-1 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        *ngFor="let item of basket">
+        <a href="#">
+            <img class="p-8 imgProd rounded-t-lg" src="{{ item.img }}" alt="product image" />
+        </a>
+
+        <div class="px-5 pb-5">
             <a href="#">
-                <img class="p-8 imgProd rounded-t-lg" src="{{ item.img }}" alt="product image" />
+                <h5 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ item.productName
+                    }}
+                </h5>
             </a>
 
-            <div class="px-5 pb-5">
-                <a href="#">
-                    <h5 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ item.productName
-                        }}
-                    </h5>
-                </a>
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-gray-900 dark:text-white">€ {{ item.price }}</span>
+            </div>
 
-                <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-gray-900 dark:text-white">€ {{ item.price }}</span>
-                </div>
+            <div class="flex m-2 items-center justify-between">
+                <button (click)="minusItemBasket(item)"
+                    class="block text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    -
+                </button>
 
-                <div class="flex m-2 items-center justify-between">
-                    <button (click)="minusItemBasket(item)"
-                        class="block text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button">
-                        -
-                    </button>
+                <p class="text-white my-2">
+                    Quantità: {{item.quantity}}
+                </p>
 
-                    <p class="text-white my-2">
-                        Quantità: {{item.quantity}}
-                    </p>
-
-                    <button (click)="plusItemBasket(item)"
-                        class="block text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button">
-                        +
-                    </button>
-                </div>
+                <button (click)="plusItemBasket(item)"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    +
+                </button>
             </div>
         </div>
     </div>
-
 </div>
+
 <ng-template #emptyBasket>
-    <p>Il tuo carrello è vuoto.</p>
-</ng-template>
-
-
-
-
-<!-- <div *ngFor="let product of products"
-    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-        <img class="p-8 rounded-t-lg" src="../" alt="product image" />
+    <p class="text-center">Il tuo carrello è vuoto.</p>
+    <a href="/products">
+        <button
+            class="flex centr text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button">
+            Aggiungi prodotti
+        </button>
     </a>
-    <div class="px-5 pb-5">
-        <a href="#">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ product.name }}</h5>
-        </a>
 
-        <div class="flex items-center justify-between">
-            <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ product.price }}</span>
-            <a href="#"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm flex items-center px-3 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aggiungi
-                al <span class="cart material-symbols-outlined ml-1 icon-white">shopping_cart</span></a>
-        </div>
-    </div>
-</div> -->
+</ng-template>

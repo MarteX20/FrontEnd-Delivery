@@ -1,8 +1,6 @@
 .container {
     max-width: 100%;
     margin: 0 auto;
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -11,4 +9,8 @@
     margin: 0 auto;
     height: 350px;
     object-fit: contain;
+}
+
+.centr{
+    margin: 0 auto;
 }

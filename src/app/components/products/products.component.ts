@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductService } from './product.service';
 import { IProduct } from '../../models/products';
 import { Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
     selector: 'app-products',
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductsComponent implements OnInit {
 
+    @ViewChild('toastElement') toastElement: ElementRef | undefined;
     products: any
     productsSubscription!: Subscription
 
@@ -43,16 +44,32 @@ export class ProductsComponent implements OnInit {
         }
     }
 
-    addToBasket(product: IProduct) {
-        product.quantity = 1
-        let findItem
+    getBasket(): any[] {
+        const basket = localStorage.getItem("basket");
+        return basket? JSON.parse(basket):[]
+    }
 
-        if (this.basket.length > 0) {
-            findItem = this.basket.find((item: { id: string; }) => item.id === product.id)
+    setBasket(basket: any[]){
+        localStorage.setItem("basket", JSON.stringify(basket))
+    }
 
-            if (findItem) { this.updateToBasket(findItem) }
-            else this.postToBasket(product)
-        } else this.postToBasket(product)
+    addBasket(ogg: any){
+        ogg.quantity = 1
+        const basket = this.getBasket()
+        basket.push(ogg)
+        this.setBasket(basket)
+
+        //Mostro il toast al click
+        if (this.toastElement) {
+            this.toastElement.nativeElement.style.display = 'flex'
+
+            //Il toast sparisce dopo 3 secondi qui
+            setTimeout(() => {
+                if (this.toastElement) {
+                    this.toastElement.nativeElement.style.display = 'none'
+                }
+            }, 3000)
+        }
     }
 
     updateToBasket(product: IProduct) {
@@ -67,7 +84,6 @@ export class ProductsComponent implements OnInit {
     ngOnInit(): void {
         this.productSrv.getProducts().subscribe((data) => {
             this.products = data.content;
-            console.log(data);
         })
 
         this.basketSubscription = this.productSrv.getProductsFromBasket().subscribe((data) => {

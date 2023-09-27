@@ -19,6 +19,7 @@ export class AuthService {
                 if (response.accessToken) {
                     console.log('Token:', response.accessToken);
                     localStorage.setItem('token', response.accessToken);
+                    this.isAuthenticated.next(true); //Imposta l'autenticazione su true
                 }
                 return response;
             }));

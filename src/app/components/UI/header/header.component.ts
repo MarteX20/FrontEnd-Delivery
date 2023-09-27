@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
     userEmail: String = ''
     userAddress: String = ''
 
-    constructor(private authSrv: AuthService ) { }
+    constructor(private authSrv: AuthService, private router: Router ) { }
 
     ngOnInit(): void {
         if (this.authSrv.isLoggedIn()){
@@ -29,6 +30,20 @@ export class HeaderComponent implements OnInit {
             }
         }
     }
+
+    logout() {
+        this.authSrv.logout().subscribe(
+            (response) => {
+                console.log(response);
+
+                this.router.navigate(['/home']);
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+    }
+
 
     private decodeToken(token: string): any {
         const payload = token.split('.')[1]

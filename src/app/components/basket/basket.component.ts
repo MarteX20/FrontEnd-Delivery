@@ -14,12 +14,19 @@ export class BasketComponent implements OnInit {
     deliveryCostInCents: number = 0
     basket: any
     basketSubscription!: Subscription
+    isDeliverySelected: boolean = false
+    isPickupSelected: boolean = false
 
     ngOnInit(): void {
-        this.ProductService.getProductsFromBasket().subscribe((data) => {
-            this.basket = data
 
-        })
+        const savedBasket = localStorage.getItem('basket')
+
+        if (savedBasket) {
+            this.basket = JSON.parse(savedBasket)
+            console.log(this.basket);
+        } else {
+            this.basket = []
+        }
     }
 
     ngOnDestroy() {
@@ -28,16 +35,16 @@ export class BasketComponent implements OnInit {
 
     minusItemBasket(item: IProduct) {
         if (item.quantity === 1) {
-            this.ProductService.deleteProductFromBasket(item.id).subscribe(() => {
-                let idx = this.basket.findIndex((data: IProduct) => data.id === item.id)
+            const idx = this.basket.findIndex((data: IProduct) => data.id === item.id);
+            if (idx !== -1) {
                 this.basket.splice(idx, 1);
-            });
+            }
         } else {
             item.quantity -= 1;
-            this.ProductService.updateProductToBasket(item).subscribe((data) => {
-            });
         }
+        localStorage.setItem('basket', JSON.stringify(this.basket));
     }
+
 
     calculateTotal(): number {
         let total = 0;
@@ -53,20 +60,10 @@ export class BasketComponent implements OnInit {
 
     plusItemBasket(item: IProduct) {
         item.quantity += 1;
-        this.ProductService.updateProductToBasket(item).subscribe((data) => {
-        });
     }
 
-    clearBasket(){
+    clearBasket() {
+        localStorage.removeItem('basket')
         this.basket = [];
     }
 }
-
-
-
-// export enum DeliveryOption {
-//     Delivery = 1,
-//     Pickup = 2
-// }
-
-// selectedDeliveryOption: DeliveryOption
