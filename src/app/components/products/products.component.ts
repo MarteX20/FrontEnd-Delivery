@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductService } from './product.service';
 import { IProduct } from '../../models/products';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ProductsComponent implements OnInit {
     basket: any
     basketSubscription!: Subscription
 
-    constructor(private productSrv: ProductService) { }
+    constructor(private productSrv: ProductService, public authSrv: AuthService) { }
 
     selectedProduct: any;
     showModal: boolean = false;
