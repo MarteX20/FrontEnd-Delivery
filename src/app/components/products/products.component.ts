@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class ProductsComponent implements OnInit {
 
-    @ViewChild('toastElement') toastElement: ElementRef | undefined;
+    @ViewChild('toastElement') toastElement: ElementRef | undefined
     products: any
     productsSubscription!: Subscription
 
@@ -22,32 +22,32 @@ export class ProductsComponent implements OnInit {
 
     constructor(private productSrv: ProductService, public authSrv: AuthService) { }
 
-    selectedProduct: any;
-    showModal: boolean = false;
+    selectedProduct: any
+    showModal: boolean = false
 
     openModal(product: any) {
-        this.selectedProduct = product;
+        this.selectedProduct = product
         this.showModal = true;
         const modal = document.getElementById("defaultModal")
 
         if (modal) {
-            modal.style.display = "block";
+            modal.style.display = "block"
         }
     }
 
     closeModal() {
-        this.showModal = false;
-        this.selectedProduct = null;
+        this.showModal = false
+        this.selectedProduct = null
 
         const modal = document.getElementById("defaultModal")
 
         if (modal) {
-            modal.style.display = "none";
+            modal.style.display = "none"
         }
     }
 
     getBasket(): any[] {
-        const basket = localStorage.getItem("basket");
+        const basket = localStorage.getItem("basket")
         return basket? JSON.parse(basket):[]
     }
 
@@ -55,17 +55,24 @@ export class ProductsComponent implements OnInit {
         localStorage.setItem("basket", JSON.stringify(basket))
     }
 
-    addBasket(ogg: any){
+    addBasket(ogg: IProduct) {
         ogg.quantity = 1
         const basket = this.getBasket()
-        basket.push(ogg)
-        this.setBasket(basket)
 
-        //Mostro il toast al click
+        const existingProductIndex = basket.findIndex((item: IProduct) => item.id === ogg.id)
+
+        if (existingProductIndex !== -1) {
+            basket[existingProductIndex].quantity += 1
+        } else {
+            basket.push(ogg)
+        }
+
+        this.setBasket([...basket])
+
+        //Show the toast on click
         if (this.toastElement) {
             this.toastElement.nativeElement.style.display = 'flex'
 
-            //Il toast sparisce dopo 3 secondi qui
             setTimeout(() => {
                 if (this.toastElement) {
                     this.toastElement.nativeElement.style.display = 'none'
@@ -75,8 +82,8 @@ export class ProductsComponent implements OnInit {
     }
 
     updateToBasket(product: IProduct) {
-        product.quantity += 1;
-        this.productSrv.updateProductToBasket(product).subscribe((data) => { });
+        product.quantity += 1
+        this.productSrv.updateProductToBasket(product).subscribe((data) => { })
     }
 
     postToBasket(product: IProduct) {
@@ -85,7 +92,7 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit(): void {
         this.productSrv.getProducts().subscribe((data) => {
-            this.products = data.content;
+            this.products = data.content
         })
 
         this.basketSubscription = this.productSrv.getProductsFromBasket().subscribe((data) => {

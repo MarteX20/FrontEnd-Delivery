@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IProduct } from 'src/app/models/products';
 import { ProductService } from '../products/product.service';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class BasketComponent implements OnInit {
     constructor(private ProductService: ProductService) { }
 
+    @ViewChild('toastElement1') toastElement1: ElementRef | undefined;
     deliveryCostInCents: number = 0
     basket: any
     basketSubscription!: Subscription
@@ -23,7 +24,7 @@ export class BasketComponent implements OnInit {
 
         if (savedBasket) {
             this.basket = JSON.parse(savedBasket)
-            console.log(this.basket);
+
         } else {
             this.basket = []
         }
@@ -65,5 +66,16 @@ export class BasketComponent implements OnInit {
     clearBasket() {
         localStorage.removeItem('basket')
         this.basket = [];
+        //Mostro il toast al click
+        if (this.toastElement1) {
+            this.toastElement1.nativeElement.style.display = 'flex'
+
+            //Il toast sparisce dopo 3 secondi qui
+            setTimeout(() => {
+                if (this.toastElement1) {
+                    this.toastElement1.nativeElement.style.display = 'none'
+                }
+            }, 3000)
+        }
     }
 }
