@@ -70,7 +70,6 @@ export class BasketComponent implements OnInit {
         if (this.toastElement1) {
             this.toastElement1.nativeElement.style.display = 'flex'
 
-            //Il toast sparisce dopo 3 secondi qui
             setTimeout(() => {
                 if (this.toastElement1) {
                     this.toastElement1.nativeElement.style.display = 'none'
