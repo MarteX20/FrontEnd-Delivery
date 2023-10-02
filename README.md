@@ -1,27 +1,29 @@
-# FrontEndDelivery
+Epic Delivery
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.11.
+Questa app è pensata a un singolo ristorante che voglia avere un proprio sito per rivecevere ordine online
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installazione e Utilizzo
 
-## Code scaffolding
+1. Scaricare il backend da [questa]([www.linkedin.com/in/artem-asauliak](https://github.com/MarteX20/EpicDelivery)) repository
+2. Usando IDE (es. Intellij IDEA) avviare il file application
+3. Aprire questa repository con VS Code e fare **npm i** per installare tutte le dipendenze
+4. In powershell digitare **ng s -o** e aspettare che il progetto si apre da solo nel browser
+5. Vedere il progetto e provare le varie funzioni
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Esempi
 
-## Build
+![image](https://github.com/MarteX20/FrontEnd-Delivery/assets/98113914/cdfaa202-f352-425f-8823-dfb55aa0cc4f)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Contatti
 
-## Running unit tests
+[LinkedIn](www.linkedin.com/in/artem-asauliak)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Tecnologie Utilizzate
+    FrontEnd : Angular 14, Tailwind CSS, Flowbite, RXJS
+    BackEnd: Java 17, Spring-Boot, Spring Data JPA, Spring Security, PostgreSQL
 
-## Running end-to-end tests
+## IDE utilizzate
+    VS Code -> FrontEnd
+    Intellij IDEA Community Edition -> BackEnd
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
