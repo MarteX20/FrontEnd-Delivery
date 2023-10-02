@@ -10,7 +10,9 @@ Questa app è pensata a un singolo ristorante che voglia avere un proprio sito p
 
 4. Aprire questa repository con VS Code e fare **npm i** per installare tutte le dipendenze e librerie
 5. In powershell digitare **ng s -o** e aspettare che il progetto si apre da solo nel browser
-6. Vedere il progetto e provare le varie funzioni
+6. ![Start App FrontEnd](https://github.com/MarteX20/FrontEnd-Delivery/assets/98113914/6b3f8e01-1575-41c2-80ff-9d5da22f29ef)
+
+7. Vedere il progetto e provare le varie funzioni
 
 ## Esempi
 
