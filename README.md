@@ -44,6 +44,6 @@ Prossimamente...
 \. BackEnd: Java 17, Spring-Boot, Spring Data JPA, Spring Security, PostgreSQL
 
 ## IDE utilizzate
- -  VS Code -> FrontEnd
- -  Intellij IDEA Community Edition -> BackEnd
+-  VS Code -> FrontEnd
+-  Intellij IDEA Community Edition -> BackEnd
 
