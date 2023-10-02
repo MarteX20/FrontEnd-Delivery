@@ -40,8 +40,8 @@ Prossimamente...
 [LinkedIn](www.linkedin.com/in/artem-asauliak)
 
 ## Tecnologie Utilizzate
-\. FrontEnd : Angular 14, Tailwind CSS, Flowbite, RXJS
-\. BackEnd: Java 17, Spring-Boot, Spring Data JPA, Spring Security, PostgreSQL
+-  FrontEnd : Angular 14, Tailwind CSS, Flowbite, RXJS
+-  BackEnd: Java 17, Spring-Boot, Spring Data JPA, Spring Security, PostgreSQL
 
 ## IDE utilizzate
 -  VS Code -> FrontEnd
