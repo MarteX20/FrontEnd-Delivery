@@ -19,6 +19,7 @@ import { AppServiceService } from './services/app-service.service';
 import { FormsModule } from '@angular/forms';
 import { ContactComponent } from './components/contact/contact.component';
 import { AuthGuard } from './components/auth.guard';
+import { PaypalComponent } from './components/paypal/paypal.component';
 
 
 const routes: Route[] = [
@@ -28,6 +29,7 @@ const routes: Route[] = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'payment', component: PaypalComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
@@ -44,6 +46,7 @@ const routes: Route[] = [
         DialogBoxComponent,
         NotFoundComponent,
         ContactComponent,
+        PaypalComponent,
     ],
     imports: [
         RouterModule.forRoot(routes),

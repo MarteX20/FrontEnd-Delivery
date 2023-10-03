@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IProduct } from 'src/app/models/products';
 import { ProductService } from '../products/product.service';
 import { Subscription } from 'rxjs';
+import { PaymentService } from 'src/app/services/payment.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-basket',
@@ -9,7 +11,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-    constructor(private ProductService: ProductService) { }
+    constructor(private ProductService: ProductService, private paymentSrv: PaymentService) { }
 
     @ViewChild('toastElement1') toastElement1: ElementRef | undefined;
     deliveryCostInCents: number = 0
@@ -49,16 +51,18 @@ export class BasketComponent implements OnInit {
 
     calculateTotal(): number {
         let total = 0;
+
         for (const item of this.basket) {
             total += item.price * item.quantity;
         }
 
         const deliveryCostInEuro = this.deliveryCostInCents / 100
-
         total += deliveryCostInEuro
-        return total;
-    }
+        this.paymentSrv.updateTotalAmount(total)
 
+        return total;
+
+    }
     plusItemBasket(item: IProduct) {
         item.quantity += 1;
     }

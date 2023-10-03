@@ -69,13 +69,16 @@
                 class="w-full p-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-not-allowed dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:text-gray-200 dark:bg-gray-800">
                 Totale del tuo ordine è: {{ calculateTotal() | currency:"EUR"}}</p>
         </div>
-
-        <div class="ml-2 mb-2">
+        <div class="ml-2 mb-2 flex items-center">
             <button (click)="clearBasket()" [disabled]="!isDeliverySelected && !isPickupSelected"
                 class="block text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
                 Ordina!
             </button>
+            <p class="text-center">Oppure paga con <button (click)="clearBasket()"
+                    [disabled]="!isDeliverySelected && !isPickupSelected"
+                    class="text-white bg-blue-700 mr-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    routerLink="/payment">PayPal</button></p>
         </div>
     </div>
 </div>
@@ -118,6 +121,7 @@
                 </button>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -136,6 +140,5 @@
             type="button">
             Aggiungi prodotti
         </button>
-        <p class="text-center">(Il pagamento online con la carta arriva nelle versioni successive)</p>
     </a>
 </ng-template>
