@@ -4,7 +4,7 @@ Questa app è pensata a un singolo ristorante che voglia avere un proprio sito p
 
 ## Installazione e Utilizzo
 
-1. Scaricare il backend da [questa]([https://github.com/MarteX20/EpicDelivery) repository
+1. Scaricare il backend da [questa](https://github.com/MarteX20/EpicDelivery) repository
 2. Usando IDE (es. Intellij IDEA) avviare il file application
 3. ![Application Run](https://github.com/MarteX20/FrontEnd-Delivery/assets/98113914/3117565d-f525-44c5-a758-098db8958bd0)
 
