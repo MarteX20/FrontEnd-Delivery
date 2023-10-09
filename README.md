@@ -54,7 +54,10 @@ Es. Utente &nbsp;
 
 
 
-## 🇬🇧 ENG 🇬🇧 
+## ENG 
+
+![image](https://github.com/MarteX20/FrontEnd-Delivery/assets/98113914/549b3aec-554a-4dac-a4df-70eb76746fbf)
+
 
 ## Epic Delivery
 
